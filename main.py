@@ -145,9 +145,13 @@ if __name__ == '__main__':
     time.sleep(1)  # make sure the video is finished before attempting to upload to YouTube
     # this is retrieved from the final path created by the editing file
     filepath = 'C:\\Users\\Remag_OW\\PycharmProjects\\YoutubeUploadBot\\edited_video.mp4'
-    title = 'Testing Upload! | GGS'
-    desc = 'Testing our first upload to YouTube!'
-    keywords = 'Guilty Gear, Gaming'
+    date = date.today() - timedelta(days=1)  # gives you the day from which the clips were from
+    yesterday = date.strftime("%b-%d-%Y")
+
+    game = twitchClips.game_name
+    title = f'{yesterday} Highlights | {game}'
+    desc = f'{game} Highlights for {yesterday}'
+    keywords = f'{game}, Gaming, Epic'
 
     argparser.add_argument("--file", help="Video file to upload", default=filepath)
     argparser.add_argument("--title", help="Video title", default=title)
