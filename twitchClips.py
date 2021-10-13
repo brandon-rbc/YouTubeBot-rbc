@@ -5,6 +5,8 @@ import urllib.request
 import sys
 import os
 
+# global variables:
+game_name = ''
 
 # auth stuff for TwitchAPI
 # a local token is generated each time you need to access the Twitch API, which is what the below is doing
@@ -53,12 +55,27 @@ def initialize_clips():
     # request top clips from whatever game, needs gameid, can change how many clips to search for after the 'first' parameter
     # Guilty Gear Strive id: 517159
     # Paladins id: 491115
+    
+    
+    # Search for the game you would like!
+    game_input = input('Please enter the name of the game you want the id for: ')
+    game_input.replace(' ', '%20')
+    game_info = requests.get(f"https://api.twitch.tv/helix/games?name={game_input}", headers=headers)
+    game_json = game_info.json()
+    try:
+        game_id, game_name = game_json['data'][0]['id'], game_json['data'][0]['name']
+    except IndexError as e:
+        print('Please rerun the program and enter a valid game name.')
+        exit()
+
     clips = requests.get(
-        f"https://api.twitch.tv/helix/clips?game_id=517159&first=3&started_at={begin}&ended_at={end}",
+        f"https://api.twitch.tv/helix/clips?game_id={game_id}&first=40&started_at={begin}&ended_at={end}",
         headers=headers)  # top of yesterday
+    
     # clips = requests.get(
     #     f"https://api.twitch.tv/helix/clips?game_id=491115&first=10",
     #     headers=headers) # top all time
+    
     clips_json = clips.json()
     print('downloading clips...')
     title = clips_json['data']
