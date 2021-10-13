@@ -150,7 +150,7 @@ if __name__ == '__main__':
 
     game = twitchClips.game_name
     title = f'{yesterday} Highlights | {game}'
-    desc = f'{game} Highlights for {yesterday}'
+    desc = f'{game} highlights for {yesterday}'
     keywords = f'{game}, Gaming, Epic'
 
     argparser.add_argument("--file", help="Video file to upload", default=filepath)
